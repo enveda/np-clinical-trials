@@ -1,0 +1,3 @@
+[submodule "fpadmet"]
+	path = fpadmet
+	url = https://github.com/jcheminform/fpadmet.git
