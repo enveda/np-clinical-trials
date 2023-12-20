@@ -9,10 +9,12 @@ def split_table_in_batches(table, added_name="", number_of_batches=10):
     """Split table into batches of size batch_size"""
 
     # Fill second column missing values with index
-    table[1] = table[1].fillna(table.index.to_series()).astype(int).astype(str)
+    try:
+        table[1] = table[1].fillna(table.index.to_series()).astype(int).astype(str)
+    except Exception as e:
+        print("The table is already filled with index")
     # Split table into batches according to number_of_batches
     split_table = np.array_split(table, number_of_batches)
-    # return [table[i : i + batch_size] for i in range(0, len(table), batch_size)]
     return split_table
 
 
@@ -33,14 +35,15 @@ def prepare_batches(input_batch_list, dataset_name="DDS"):
     return smi_files_list
 
 
-def run_fp_admet(smi_files, smi_tables):
+def run_fp_admet(smi_files):
     os.chdir("fpadmet")
     base_path = smi_files[0].split(".")[0]
-    for current_file, current_table in zip(smi_files, smi_tables):
+    for current_file in smi_files:
         compound_command, commands_count = "", 1
+        current_batch_file = current_file.split(".")[0]
         for current_parameter in range(1, 59):
             prepared_command = f"bash runadmet_customized.sh -f {current_file} -p {current_parameter} -a -o {base_path} & "
-            predicted_file = f"{base_path}_{current_parameter}_predicted.txt"
+            predicted_file = f"{current_batch_file}_{current_parameter}_predicted.txt"
             if os.path.exists(predicted_file):
                 print(f"File {predicted_file} already exists")
                 continue
@@ -62,14 +65,14 @@ def run_fp_admet(smi_files, smi_tables):
 FPADMET_RESULTS = "/home/ec2-user/np-clinical-trials/fpadmet_results"
 
 DDS_50_smi = pd.read_csv("support/DDS-50.smi", sep="\t", header=None)
-COCONUT_smi = pd.read_csv("support/COCONUT_DB.smi", sep="\t", header=None)
+COCONUT_smi = pd.read_csv("support/COCONUT_DB.smi", sep=" ", header=None)
 
 DDS_split_tables = split_table_in_batches(DDS_50_smi, number_of_batches=30)
 DDS_split_files = prepare_batches(DDS_split_tables, dataset_name="DDS")
 
-run_fp_admet(DDS_split_files, DDS_split_tables)
+run_fp_admet(DDS_split_files)
 
 COCONUT_split_tables = split_table_in_batches(COCONUT_smi, number_of_batches=30)
-COCONUT_split_files = prepare_batches(COCONUT_split_tables)
+COCONUT_split_files = prepare_batches(COCONUT_split_tables, dataset_name="COCONUT")
 
-run_fp_admet(COCONUT_split_files, COCONUT_split_tables, dataset_name="COCONUT")
+run_fp_admet(COCONUT_split_files)
