@@ -37,12 +37,12 @@ def prepare_batches(input_batch_list, dataset_name="DDS"):
 
 def run_fp_admet(smi_files):
     os.chdir("fpadmet")
-    base_path = smi_files[0].split(".")[0]
+    # base_path = smi_files[0].split(".")[0]
     for current_file in smi_files:
         compound_command, commands_count = "", 1
         current_batch_file = current_file.split(".")[0]
         for current_parameter in range(1, 59):
-            prepared_command = f"bash runadmet_customized.sh -f {current_file} -p {current_parameter} -a -o {base_path} & "
+            prepared_command = f"bash runadmet_customized.sh -f {current_file} -p {current_parameter} -a -o {current_batch_file} & "
             predicted_file = f"{current_batch_file}_{current_parameter}_predicted.txt"
             if os.path.exists(predicted_file):
                 print(f"File {predicted_file} already exists")
@@ -59,7 +59,6 @@ def run_fp_admet(smi_files):
                 else:
                     print(f"Bash command failed with return code {result.returncode}")
     os.chdir("..")
-    print(os.getcwd())
 
 
 FPADMET_RESULTS = "/home/ec2-user/np-clinical-trials/fpadmet_results"
