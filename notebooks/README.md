@@ -7,6 +7,7 @@ Following is a brief description of the Jupyter notebooks and scripts in this di
 - **[Clinical_trial_analysis_proprietary.ipynb](clinical_trials/3_clinical_trials_dump_software.ipynb)** - Clinical trials NPs vs. Synthetics compounds from proprietary dataset.
 - **[Patent_analysis.ipynb](patents/patent_cmp_nplikeliness.ipynb)** - NPs as starting points to clinical trials from the patent perspective (Section 3.2 in the manuscript)
 - **[Toxicity_analysis.ipynb](toxicity/toxicity_analysis.ipynb)** - Understanding decreased drug attrition for NPs based on toxicity data (Section 3.3 in the manuscript)
+- **[Toxicity_predictions.ipynb](toxicity/fpadmet.ipynb)** - Comparing predicted toxicity between NPs and synthetics (Section 3.3 in the manuscript)
 
 ### Additional files
 - **[utils.py](clinical_trials/np_likeness_utils.py)** - Python utils for clinicaltrials.gov pipeline.
