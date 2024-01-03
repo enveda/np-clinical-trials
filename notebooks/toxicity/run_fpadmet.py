@@ -5,8 +5,12 @@ import subprocess
 import time
 
 
-def split_table_in_batches(table, added_name="", number_of_batches=10):
-    """Split table into batches of size batch_size"""
+def split_table_in_batches(table, number_of_batches=10):
+    """
+    Split table into batches of size batch_size
+    :param table: pandas dataframe
+    :param number_of_batches: number of batches to split the table into
+    """
 
     # Fill second column missing values with index
     try:
@@ -21,6 +25,8 @@ def split_table_in_batches(table, added_name="", number_of_batches=10):
 def prepare_batches(input_batch_list, dataset_name="DDS"):
     """
     Take a list of batches and save them as .smi files in the fpadmet_results folder
+    :param input_batch_list: list containing batches of pandas dataframes
+    :param dataset_name: name of the dataset
     """
     smi_files_list = []
     for index, object in enumerate(input_batch_list):
@@ -36,7 +42,11 @@ def prepare_batches(input_batch_list, dataset_name="DDS"):
 
 
 def run_fp_admet(smi_files):
-    os.chdir("fpadmet")
+    """
+    Run fp-admet on the list of smi files
+    :param smi_files: list of smi files
+    """
+    os.chdir("{HOME}/fpadmet")
     # base_path = smi_files[0].split(".")[0]
     for current_file in smi_files:
         compound_command, commands_count = "", 1
@@ -61,10 +71,11 @@ def run_fp_admet(smi_files):
     os.chdir("..")
 
 
-FPADMET_RESULTS = "../../data/output/fpadmet_results"
+HOME = "/home/ec2-user/np-clinical-trials"
+FPADMET_RESULTS = f"{HOME}/data/output/fpadmet_results"
 
-DDS_50_smi = pd.read_csv("../../data/DDS-50.smi", sep="\t", header=None)
-COCONUT_smi = pd.read_csv("../../data/COCONUT_DB.smi", sep=" ", header=None)
+DDS_50_smi = pd.read_csv(f"{HOME}/data/DDS-50.smi", sep="\t", header=None)
+COCONUT_smi = pd.read_csv(f"{HOME}/data/COCONUT_DB.smi", sep=" ", header=None)
 
 DDS_split_tables = split_table_in_batches(DDS_50_smi, number_of_batches=30)
 DDS_split_files = prepare_batches(DDS_split_tables, dataset_name="DDS")
