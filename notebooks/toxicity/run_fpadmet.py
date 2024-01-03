@@ -61,10 +61,10 @@ def run_fp_admet(smi_files):
     os.chdir("..")
 
 
-FPADMET_RESULTS = "/home/ec2-user/np-clinical-trials/fpadmet_results"
+FPADMET_RESULTS = "../../data/output/fpadmet_results"
 
-DDS_50_smi = pd.read_csv("support/DDS-50.smi", sep="\t", header=None)
-COCONUT_smi = pd.read_csv("support/COCONUT_DB.smi", sep=" ", header=None)
+DDS_50_smi = pd.read_csv("../../data/DDS-50.smi", sep="\t", header=None)
+COCONUT_smi = pd.read_csv("../../data/COCONUT_DB.smi", sep=" ", header=None)
 
 DDS_split_tables = split_table_in_batches(DDS_50_smi, number_of_batches=30)
 DDS_split_files = prepare_batches(DDS_split_tables, dataset_name="DDS")
