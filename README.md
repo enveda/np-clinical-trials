@@ -1,7 +1,6 @@
-# The increase in prevalence of natural products through the drug discovery process
+# Natural products have increased rates of clinical trial success throughout the drug development process
 
-
-This repository contains code and data described in detail in our paper, "The increase in prevalence of natural products through the drug discovery process" (Domingo-Fernández *et al.*, 2024).
+This repository contains code and data described in detail in our paper (Domingo-Fernández *et al.*, 2024).
 
 ## Table of Contents
 
@@ -13,7 +12,7 @@ This repository contains code and data described in detail in our paper, "The in
 If you have found our manuscript useful in your work, please consider citing:
 
 > Domingo-Fernandez, D., Gadiya, Y., Preto, A. J., Krettler, C., Mubeen, S., Allen, A., Healey, D., Colluru, V. (2024).
-The increase in prevalence of natural products through the drug discovery process. *bioRxiv*.
+Natural products have increased rates of clinical trial success throughout the drug development process. *bioRxiv*.
 
 ## Reproducibility
 
