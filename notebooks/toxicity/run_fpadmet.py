@@ -52,7 +52,7 @@ def run_fp_admet(smi_files):
         compound_command, commands_count = "", 1
         current_batch_file = current_file.split(".")[0]
         for current_parameter in range(1, 59):
-            prepared_command = f"bash runadmet_customized.sh -f {current_file} -p {current_parameter} -a -o {current_batch_file} & "
+            prepared_command = f"bash run_fpadmet.sh -f {current_file} -p {current_parameter} -a -o {current_batch_file} & "
             predicted_file = f"{current_batch_file}_{current_parameter}_predicted.txt"
             if os.path.exists(predicted_file):
                 print(f"File {predicted_file} already exists")
