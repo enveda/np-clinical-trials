@@ -14,6 +14,8 @@ from rdkit.Chem import QED, AllChem, Crippen, Descriptors, Lipinski, RDConfig
 from rdkit.Contrib.NP_Score import npscorer
 from tqdm import tqdm
 
+from rdkit.Chem.Scaffolds.MurckoScaffold import MurckoScaffoldSmiles
+
 # Needed to get the Synthetic accessibility score loaded from RDKit (https://github.com/rdkit/rdkit/issues/2279)
 sys.path.append(os.path.join(RDConfig.RDContribDir, "SA_Score"))
 import sascorer  # noqa: E402
@@ -270,6 +272,7 @@ def get_np_scores(
     np_classifier_cache={},  # noqa: B006
     plot=False,
     logging=False,
+    murcko_scaffold=False,
 ):
     if skip_duplicate:
         all_smiles, duplicate_pairs = remove_duplicates(all_smiles)
@@ -327,6 +330,10 @@ def get_np_scores(
                     continue
 
                 np_classifier_cache[smiles] = np_classifier_metadata
+
+        # Do analysis at murcko scaffold level
+        if murcko_scaffold:
+            smiles = MurckoScaffoldSmiles(smiles)
 
         if smiles in np_likeness_cache:
             score = np_likeness_cache[smiles]
