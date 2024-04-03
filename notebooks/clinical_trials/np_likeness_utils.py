@@ -297,6 +297,8 @@ def get_np_scores(
     synthetic_accessibility_np = []
     synthetic_accessibility_synthetics = []
 
+    murckos = set()
+
     for smiles in tqdm(all_smiles):
         # Process salts to get the largest molecule
         if "." in smiles:
@@ -334,12 +336,23 @@ def get_np_scores(
         # Do analysis at murcko scaffold level
         if murcko_scaffold:
             smiles = MurckoScaffoldSmiles(smiles)
+            mol = Chem.MolFromSmiles(smiles)
+
+        if smiles in murckos:
+            continue
+        else:
+            murckos.add(smiles)
 
         if smiles in np_likeness_cache:
             score = np_likeness_cache[smiles]
 
         else:
-            score = npscorer.scoreMol(mol, np_model)
+            # Catch exceptions when calculating the score for some scaffolds
+            try:
+                score = npscorer.scoreMol(mol, np_model)
+            except Exception as e:
+                print(f"Could not calculate score for {smiles}. Error: {e}")
+                continue
             np_likeness_cache[smiles] = score
 
         if smiles in sas_cache:
