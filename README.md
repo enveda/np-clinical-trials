@@ -12,7 +12,7 @@ This repository contains code and data described in detail in our paper (Domingo
 If you have found our manuscript useful in your work, please consider citing:
 
 > Domingo-Fernandez, D., Gadiya, Y., Preto, A. J., Krettler, C., Mubeen, S., Allen, A., Healey, D., Colluru, V. (2024).
-Natural products have increased rates of clinical trial success throughout the drug development process. *bioRxiv*.
+Natural products have increased rates of clinical trial success throughout the drug development process. *Journal of Natural Products*. [10.1021/acs.jnatprod.4c00581](https://doi.org/10.1021/acs.jnatprod.4c00581).
 
 ## Reproducibility
 
